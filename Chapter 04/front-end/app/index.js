@@ -41,7 +41,7 @@ function api(options) {
     seneca.add({area: "ui", action: "createorder"}, function(args, done) {
         senecaProductManager.act({area: "product", action: "fetch", criteria: "byId", id: args.id}, function(err, product) {
             if(err) done(err, null);
-            senecaOrderProcessor.act(area: "orders", action: "create", products: [product], email: args.email, name: args.name, function(err, order) {
+            senecaOrderProcessor.act({area: "orders", action: "create", products: [product], email: args.email, name: args.name}, function(err, order) {
                 done(err, order);
             });
         });
@@ -52,8 +52,8 @@ function api(options) {
             prefix: '/api',
             pin:    'area:ui,action:*',
             map: {
-              products:    {GET:true}    
-              productbyid: {GET:true, suffix:'/:id'}
+              products:    {GET:true},   
+              productbyid: {GET:true, suffix:'/:id'},
               createorder: {POST:true}
             }
         }}, respond)
